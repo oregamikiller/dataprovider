@@ -1,0 +1,67 @@
+var MongoClient = require('mongodb').MongoClient;
+var db = null;
+var log = console.log;
+MongoClient.connect("mongodb://oregami:random66@localhost:27017/gamepark",function(err, mdb) {
+    db = mdb;
+    db.collection("video").insert(add_record());
+    return
+});
+
+
+function dateFormat(short){
+    var date=new Date();
+    var yy=date.getFullYear();
+    var MM=date.getMonth() + 1;
+    if(MM<10){MM='0'+MM};
+    var dd=date.getDate();
+    if(date<10){dd='0'+dd};
+    var hh=date.getHours();
+    if(hh<10){hh='0'+hh};
+    var mm=date.getMinutes();
+    if(mm<10){mm='0'+mm};
+    var ss=date.getSeconds();
+    if(ss<10){ss='0'+ss};
+
+    var result=yy+'年'+MM+'月'+dd+'日'+hh+':'+mm+':'+ss;
+    if(short){
+        result=yy+'年'+MM+'月'+dd+'日';
+    }
+    return result;
+}
+
+function pvinsert(req,page){
+
+    var collection = db.collection('pvcollection');
+    var pv = {};
+    pv.ip = req.ip;
+
+
+    var result=dateFormat();
+    pv.time = result;
+    pv.agent = req.get("User-Agent");
+    if(page.indexOf(".html")==-1){
+        pv.targetPage = page+".html"
+    }
+    else {
+        pv.targetPage = page;
+    }
+    collection.insert(pv);
+}
+
+function add_record(){
+    record = {'title':'黑暗之魂3最新宣传视频',
+        'abstract':'黑暗之魂3最新宣传视频',
+        'pic_url':'https://mmbiz.qlogo.cn/mmbiz/cNwY0wkZu5iaVG0FwYL8aZA5lH4nytgUIS5tSF1dvJiaMwnVaauhE3DvJCfgtehZgUICabiaQfZp9qxbBzNM25RBw/0?wx_fmt=jpeg',
+        'detail_url':'http://mp.weixin.qq.com/s?__biz=MzAwNjIwNTA4MA==&mid=401950856&idx=1&sn=2aff6abcd075ffe678203b08e2bdab56#rd',
+        'type':'宣传视频',
+        'mysort':0,
+        'source':"oregami"
+    }
+    record["update_time"] = dateFormat(true);
+    record["timestamp"] = new Date().getTime();
+
+    return record;
+}
+
+
+

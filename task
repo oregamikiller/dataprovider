@@ -1,0 +1,1 @@
+30 * * * * cd /opt/dataprovider; /usr/local/bin/node run.js > run.log 2>&1 #wuqingbin
