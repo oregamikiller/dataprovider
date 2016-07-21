@@ -10,7 +10,6 @@ var request     = require('request');
 var iconv       = require('iconv-lite');
 var path        = require('path');
 var fs          = require('fs');
-var trans       = require('./translate');
 
 MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
     db = mdb;
