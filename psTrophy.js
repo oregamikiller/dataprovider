@@ -116,15 +116,15 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
                 });
             });
             return Promise.resolve('ok')
-        }).then(function () {
-            console.log("all done")
-            tasks = [];
-            tasks0       = [];
-            gamelist     = [];
-            return Promise.resolve('ok');
-        }).catch(function (e) {
-            console.log(e);
-        });
+    }).then(function () {
+        console.log("all done")
+        tasks = [];
+        tasks0       = [];
+        gamelist     = [];
+        return Promise.resolve('ok');
+    }).catch(function (e) {
+        console.log(e);
+    });
     });
 };
 
