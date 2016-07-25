@@ -13,7 +13,7 @@
         "nodejs爬虫"
     ],
     "author": "oregami",
-    "license": "oregami",
+    "license": "ISC",
     "bugs": {
         "url": "https://github.com/oregamikiller/dataprovider/issues"
     },
