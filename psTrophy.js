@@ -29,7 +29,7 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
     platforms.forEach(function (pf){
         tasks.push(
             rp.get({
-                url: "http://d7vg.com/psngame?ob=newest&pf=" + pf + "&dlc=all",
+                url: "http://psnine.com/psngame?ob=newest&pf=" + pf + "&dlc=all",
                 method: 'GET',
                 encoding: 'utf-8',
                 headers: {
@@ -56,7 +56,7 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
                         picUrl: picUrl,
                         deep: 1,
                         desc: desc,
-                        id: parseInt(url.replace('http://d7vg.com/psngame/', '')),
+                        id: parseInt(url.replace('http://psnine.com/psngame/', '')),
                     };
                     game.timestamp = new Date().getTime();
                     gamelist.push(game);
@@ -103,16 +103,16 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
                             picUrl: picUrl,
                             deep: 2,
                             url: gamelist[_i].url,
-                            id: parseInt(gamelist[_i].url.replace('http://d7vg.com/psngame/', '')),
+                            id: parseInt(gamelist[_i].url.replace('http://psnine.com/psngame/', '')),
                             desc: desc
                         };
                         console.log(trophy);
                         db.collection("gameTrophy").find({'detailUrl': url, deep: 2}).toArray(function (err, docs) {
-                            if (!err && docs.length < 1) {
-                                db.collection("gameTrophy").insert(trophy);
-                            }
-                        });
-                    }
+                        if (!err && docs.length < 1) {
+                            db.collection("gameTrophy").insert(trophy);
+                        }
+                    });
+                }
                 });
             });
             return Promise.resolve('ok')
