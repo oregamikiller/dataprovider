@@ -12,6 +12,7 @@ var path        = require('path');
 var fs          = require('fs');
 var Promise     = require('bluebird');
 var rp          = require('request-promise');
+var page = process.argv[2];
 
 
 
@@ -25,7 +26,7 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
 
 
 rp.get({
-    url: "http://psnine.com/node/guide",
+    url: "http://psnine.com/node/guide?page=" + page,
     method: 'GET',
     encoding: 'utf-8',
     headers: {
@@ -41,7 +42,7 @@ rp.get({
         var picUrl = $(this).find('div .thumb').eq(0).find('a').find('img').attr('src');
         var author =$(this).find('div .meta > a').text();
         if (url) {
-            var game        = {title: title, url: url, picUrl: picUrl, deep: 1, desc:'psnine.com: ' + author, id:parseInt(url.replace('http://psnine.com/topic/','')),};
+            var game        = {title: title, url: url, picUrl: picUrl, deep: 1, desc:'来源:psnine.com: ' + author, id:parseInt(url.replace('http://psnine.com/topic/','')),};
             game.timestamp  = new Date().getTime();
             gameList.push(game);
             console.log(game);
@@ -53,4 +54,7 @@ rp.get({
             });
         }
     });
+    setTimeout(function (){
+        process.exit();
+    }, 15000)
 });

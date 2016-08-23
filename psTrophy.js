@@ -16,6 +16,7 @@ var platforms   = ['ps4', 'ps3', 'psvita'];
 var tasks        = [];
 var tasks0       = [];
 var gamelist     = [];
+var urls = [];
 
 
 
@@ -67,6 +68,8 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
                         }
                     });
                     var locaton_url = url;
+                    if (urls.indexOf(url) === -1) {
+                        urls.push(url);
                     tasks0.push(rp.get({
                         url: locaton_url,
                         method: 'GET',
@@ -76,6 +79,7 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
                             'User-Agent': 'Mozilla/5.0 (Linux; U; Android 2.3.6; en-us; Nexus S Build/GRK39F) AppleWebKit/533.1 (KHTML, like Gecko) Version'
                         }
                     }));
+                    }
                 }
             });
         });
@@ -102,8 +106,8 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
                             detailUrl: url,
                             picUrl: picUrl,
                             deep: 2,
-                            url: gamelist[_i].url,
-                            id: parseInt(gamelist[_i].url.replace('http://psnine.com/psngame/', '')),
+                            url: urls[_i],
+                            id: parseInt(urls[_i].replace('http://psnine.com/psngame/', '')),
                             desc: desc
                         };
                         console.log(trophy);
