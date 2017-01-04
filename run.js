@@ -135,7 +135,12 @@ var rule    = new schedule.RecurrenceRule();
 rule.minute = [5, 35];
 schedule.scheduleJob(rule, function () {
     job();
-    console.log('执行任务!!!');
+    console.log(new Date().toLocaleString() + '执行任务!!!');
+});
+
+
+process.on("uncaughtException", function (err) {
+    console.log(err);
 });
 
 

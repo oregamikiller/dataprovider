@@ -19,14 +19,13 @@ var gamelist     = [];
 var urls = [];
 
 
-
+MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
+    db = mdb;
+});
 
 
 var job = function () {
 
-MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
-    db = mdb;
-});
     platforms.forEach(function (pf){
         tasks.push(
             rp.get({
@@ -125,6 +124,7 @@ MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
         tasks = [];
         tasks0       = [];
         gamelist     = [];
+        urls = [];
         return Promise.resolve('ok');
     }).catch(function (e) {
         console.log(e);
@@ -136,5 +136,10 @@ var rule    = new schedule.RecurrenceRule();
 rule.hour = [6, 18];
 schedule.scheduleJob(rule, function () {
     job();
-    console.log('执行任务!!!');
+    console.log(new Date().toLocaleString() + '执行任务!!!');
+});
+
+
+process.on("uncaughtException", function (err) {
+    console.log(err);
 });

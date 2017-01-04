@@ -42,7 +42,7 @@ rp.get({
         var picUrl = $(this).find('div .thumb').eq(0).find('a').find('img').attr('src');
         var author =$(this).find('div .meta > a').text();
         if (url) {
-            var game        = {title: title, url: url, picUrl: picUrl, deep: 1, desc:'来源:psnine.com: ' + author, id:parseInt(url.replace('http://psnine.com/topic/','')),};
+            var game        = {title: title, url: url, picUrl: picUrl, deep: 1, desc:'作者: ' + author, id:parseInt(url.replace('http://psnine.com/topic/','')),};
             game.timestamp  = new Date().getTime();
             gameList.push(game);
             console.log(game);
