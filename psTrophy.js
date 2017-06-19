@@ -60,7 +60,6 @@ var job = function () {
                     };
                     game.timestamp = new Date().getTime();
                     gamelist.push(game);
-                    console.log(game);
                     db.collection("gameTrophy").find({'url': url, deep: 1, plantForm:platforms[index]}).toArray(function (err, docs) {
                         if (!err && docs.length < 1) {
                             db.collection("gameTrophy").insert(game);
@@ -109,7 +108,6 @@ var job = function () {
                             id: parseInt(urls[_i].replace('http://psnine.com/psngame/', '')),
                             desc: desc
                         };
-                        console.log(trophy);
                         db.collection("gameTrophy").find({'detailUrl': url, deep: 2}).toArray(function (err, docs) {
                         if (!err && docs.length < 1) {
                             db.collection("gameTrophy").insert(trophy);
@@ -136,10 +134,5 @@ var rule    = new schedule.RecurrenceRule();
 rule.hour = [6, 18];
 schedule.scheduleJob(rule, function () {
     job();
-    console.log(new Date().toLocaleString() + '执行任务!!!');
-});
-
-
-process.on("uncaughtException", function (err) {
-    console.log(err);
+    console.log('执行任务!!!');
 });
