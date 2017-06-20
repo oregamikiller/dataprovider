@@ -1,26 +1,27 @@
-﻿{
-    "name": "dataprovider",
-    "version": "1.1.0",
-    "description": "本站数据提供脚本",
-    "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/oregamikiller"
-    },
-    "keywords": [
-        "crawler",
-        "node.js",
-        "nodejs爬虫"
-    ],
-    "author": "oregami",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/oregamikiller/dataprovider/issues"
-    },
-    "homepage": "http://semidream.com",
-    "dependencies": {
-        "iconv-lite": "^0.4.6",
-        "cheerio": "^0.18.0",
-        "request": "^2.51.0"
-    }
+{
+  "name": "dataprovider",
+  "version": "1.1.0",
+  "description": "本站数据提供脚本",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oregamikiller"
+  },
+  "keywords": [
+    "crawler",
+    "node.js",
+    "nodejs爬虫"
+  ],
+  "author": "oregami",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oregamikiller/dataprovider/issues"
+  },
+  "homepage": "http://semidream.com",
+  "dependencies": {
+    "cheerio": "^0.18.0",
+    "iconv-lite": "^0.4.6",
+    "mongodb": "^2.2.24",
+    "request": "^2.51.0"
+  }
 }
