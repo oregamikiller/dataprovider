@@ -18,21 +18,18 @@ var tasks0       = [];
 var gamelist     = [];
 var urls = [];
 
-function acqq() {
 
-
-rp.get({
-    url: "http://m.ac.qq.com/comic/index/id/505430",
-    method: 'GET',
-    encoding: 'utf-8',
-    headers: {
-        ContentType: 'application/x-www-form-urlencoded',
-        'User-Agent': 'Mozilla/5.0 (Linux; U; Android 2.3.6; en-us; Nexus S Build/GRK39F) AppleWebKit/533.1 (KHTML, like Gecko) Version'
-    }
-}).then(function(result) {
-    $            = cheerio.load(result);
-    log($(".comicList-info-update").text());
+MongoClient.connect("mongodb://localhost:27017/userservice", function (err, mdb) {
+    db = mdb;
+    db.collection("tasks").find({}).toArray(function (err, docs) {
+        if (!err && docs.length > 0) {
+            console.dir(docs);
+            if (docs[0] && docs[0].id == "test") {
+                task_func = require("./acqq.js");
+                console.dir(task_func)
+                task_func.call(null,docs[0].param);
+            }
+        }
+    });
 });
-}
 
-module.exports=acqq;
