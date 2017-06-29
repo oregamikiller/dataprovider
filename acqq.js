@@ -35,4 +35,9 @@ rp.get({
 });
 }
 
+
 module.exports=acqq;
+
+if (require.main === module) {
+    acqq();
+}

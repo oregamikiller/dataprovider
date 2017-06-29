@@ -28,7 +28,9 @@ rp.get({
 }).then(function(result) {
     result = iconv.decode(result, "GB2312");
     $            = cheerio.load(result);
-    log($("tbody").find("tr").find('td').eq(1).text());
+    $("tbody").find("tr").each(function (i, elem){
+       log($(this).find('td').eq(1).text(),$(this).find('td').find('a').attr('href'));
+    });
 });
 //}
 //
