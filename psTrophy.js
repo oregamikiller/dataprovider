@@ -118,7 +118,6 @@ var job = function () {
             });
             return Promise.resolve('ok')
     }).then(function () {
-        console.log("all done")
         tasks = [];
         tasks0       = [];
         gamelist     = [];
@@ -134,5 +133,5 @@ var rule    = new schedule.RecurrenceRule();
 rule.hour = [6, 18];
 schedule.scheduleJob(rule, function () {
     job();
-    console.log('执行任务!!!');
+    console.log(new Date().toLocaleString()+'执行任务!!!');
 });

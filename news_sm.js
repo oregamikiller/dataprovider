@@ -29,7 +29,23 @@ rp.get({
     result = iconv.decode(result, "GB2312");
     $            = cheerio.load(result);
     $("tbody").find("tr").each(function (i, elem){
-       log($(this).find('td').eq(1).text(),$(this).find('td').find('a').attr('href'));
+        log($(this).find('td').eq(1).text(),"http://www.newsmth.net"   + $(this).find('td').find('a').attr('href'));
+    });
+});
+
+rp.get({
+    url: "http://www.newsmth.net/nForum/board/RealEstate?ajax",
+    method: 'GET',
+    encoding: null,
+    headers: {
+        ContentType: 'application/x-www-form-urlencoded',
+        'User-Agent': 'Mozilla/5.0 (Linux; U; Android 2.3.6; en-us; Nexus S Build/GRK39F) AppleWebKit/533.1 (KHTML, like Gecko) Version'
+    }
+}).then(function(result) {
+    result = iconv.decode(result, "GB2312");
+    $            = cheerio.load(result);
+    $("tbody").find("tr").each(function (i, elem){
+        log($(this).find('td').eq(1).text(),"http://www.newsmth.net"   + $(this).find('td').find('a').attr('href'));
     });
 });
 //}
