@@ -7,37 +7,34 @@ var fs    = require('fs'),
 
 var ImageStore = {
     save: function(filename) {
-        var uploadUrl = 'http://mp.toutiao.com/tools/kuaima_upload_picture/?client_key=704446e949e06edf&access_token=9735c9c6124308069c2709e6193f5f560009',
+        var uploadUrl = 'http://mp.toutiao.com/tools/kuaima_upload_picture/?client_key=704446e949e06edf&access_token=4f04075c7c539fd5061c146aa20a79ca0011',
             formData = {
                 upfile: fs.createReadStream(filename)
             };
 
         return rp.post({url: uploadUrl, formData: formData}).then(function (body) {
-            console.log(body);
             var picLargeUrl = JSON.parse(body).url,
                 picOriginUrl = picLargeUrl.replace('large', 'origin');
-            console.log(picOriginUrl);
-            return picOriginUrl;
+            return Promise.resolve(picOriginUrl);
         }, function (e) {
             console.error(e);
             return Promise.reject(e);
         });
     },
 
-    download: function (uri, filename, callback){
-        request.head(uri, function(err, res, body){
-            console.log('content-type:', res.headers['content-type']);
-            console.log('content-length:', res.headers['content-length']);
-
-            request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    download: function (uri, filename){
+        return new Promise(function (resolve, reject) {
+            request.head(uri, function(err, res, body){
+                request(uri).pipe(fs.createWriteStream(filename)).on('close', resolve);
+            });
         });
     },
 
 
     convert: function(uri) {
-        var filename = tempFileName();
-        ImageStore.download(uri, filename, function(){
-            ImageStore.save(filename);
+        var filename = tempFileName(uri);
+        return ImageStore.download(uri, filename).then(function() {
+            return ImageStore.save(filename);
         });
 
     }
@@ -45,14 +42,14 @@ var ImageStore = {
 }
 
 
-var tempFileName = function() {
-    return 'tempimage/' + new Date().getTime();
+var tempFileName = function(uri) {
+    return 'tempimage/' + uri.replace("http://photo.psnine.com/psngame/","");
 }
 
 
 
-var a =ImageStore.convert("http://trophy01.np.community.playstation.net/trophy/np/NPWR10889_00_0088C62D7213D9C1DA0FBBBF5E68CCE4FBAD9111C3/0890ACF54F44EA619E5B538072FA3BDB45FD5124.PNG");
-
-console.log(a);
+//var a =ImageStore.convert("http://trophy01.np.community.playstation.net/trophy/np/NPWR10889_00_0088C62D7213D9C1DA0FBBBF5E68CCE4FBAD9111C3/0890ACF54F44EA619E5B538072FA3BDB45FD5124.PNG");
+//
+//a.then(console.log);
 
 module.exports = ImageStore;
