@@ -17,17 +17,20 @@ var tasks0       = [];
 var gamelist     = [];
 var urls = [];
 var page = process.argv[2];
-var imagecovert = require('./image').convert;
+var imagecovert = require('./image').download;
 
 
     MongoClient.connect("mongodb://localhost:27017/gamepark", function (err, mdb) {
         db = mdb;
         var step =0;
-        db.collection('gameTrophy').find({'deep':1}).sort({'timestamp': -1}).skip(2000).limit(50).toArray(function(err, docs) {
+        db.collection('gameTrophy').find({'deep':1}).sort({'timestamp': -1}).skip(6500).limit(500).toArray(function(err, docs) {
             docs.forEach(function(item) {
-                imagecovert(item.picUrl.replace("photo.d7vg.com", "photo.psnine.com").replace("@91w.png", "").replace("@100w.png", "")).then(function(newurl) {
-                    db.collection('gameTrophy').update({'_id': item._id}, {$set: {cdnPic: newurl}});
-                    console.log(step++);
+                var url = item.picUrl.replace("photo.d7vg.com", "photo.psnine.com").replace("@91w.png", "").replace("@100w.png", "");
+                var file = '/opt/images/pstrophy/' + url.replace("http://photo.psnine.com/psngame/","");
+                var localUrl = 'https://www.semidream.com/images/pstrophy/' + url.replace("http://photo.psnine.com/psngame/","");
+                imagecovert(url, file).then(function(newurl) {
+                    db.collection('gameTrophy').update({'_id': item._id}, {$set: {localPic: localUrl}});
+                    console.log(step++, localUrl);
 
                 });
             });

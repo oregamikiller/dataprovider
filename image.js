@@ -43,7 +43,7 @@ var ImageStore = {
 
 
 var tempFileName = function(uri) {
-    return 'tempimage/' + uri.replace("http://photo.psnine.com/psngame/","");
+    return '/opt/images/pstrophy' + uri.replace("http://photo.psnine.com/psngame/","");
 }
 
 
